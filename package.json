@@ -3,7 +3,7 @@
     "mongodb": "^6.1.0"
   },
   "name": "back_end",
-  "description": "- Username: spider_sorbet - Password: AUO7qmzPxqPfPzc2",
+  "description": "BackEnd Part",
   "version": "1.0.0",
   "main": "app.js",
   "devDependencies": {},

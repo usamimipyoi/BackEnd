@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
-const uri = require('./atlas_uri');
 const { error } = require('console');
 
+const uri = 'mongodb+srv://spider_sorbet:AUO7qmzPxqPfPzc2@maindata.41fxhz2.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri);
 
 const main = async () => {
