@@ -1,25 +1,33 @@
-const { MongoClient } = require('mongodb');
-const { error } = require('console');
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const uri = 'mongodb+srv://spider_sorbet:AUO7qmzPxqPfPzc2@maindata.41fxhz2.mongodb.net/?retryWrites=true&w=majority';
-const client = new MongoClient(uri);
+mongoose.connect(process.env.MONGO_URL, {})
+    .then(() => {
+        console.log(`Connected to MongoDB Database.`);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
-const main = async () => {
-    try {
-        await client.connect();
-        console.log(`Connected to MongoDB Atlas`);
-        const database = await client.db().admin().listDatabases();
-        console.table(database.databases);
+const app = express();
+app.use(express.json());
+const PORT = 3000;
 
-    } catch (error) {
-        console.error(`Fail to connect:`, error);
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
-    } finally {
-        await client.close();
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 
-    }
-};
-
-main()
-    .catch((err) => console.log(err))
-    .finally(() => client.close());
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+    return res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message,
+    });
+});
