@@ -1,8 +1,8 @@
 import express from 'express';
-import Test from '../controllers/user_controller.js';
+import APIGGEZ from '../controllers/user_controller.js';
 
 const router = express.Router();
 
-router.post("/test", Test)
+router.get('/apiggez', APIGGEZ)
 
 export default router;
