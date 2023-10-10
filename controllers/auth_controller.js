@@ -3,14 +3,11 @@ import bcrypt from "bcryptjs";
 import errorHandler from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
-// Create a new user
 export const signUp = async (req, res, next) => {
     const { firstname, lastname, email, gender, phoneNumber, dob, password } = req.body;
   
-    // Hash the password
     const hashedPassword = bcrypt.hashSync(password, 10);
   
-    // Create a new user instance with the hashed password
     const newUser = new User({
       firstname,
       lastname,
@@ -22,14 +19,12 @@ export const signUp = async (req, res, next) => {
     });
   
     try {
-      // Save the user to the database
       await newUser.save();
-  
-      // Return a success response
       res.status(201).json("User created successfully.");
+
     } catch (error) {
-      // Handle any errors that occur during user creation or database save
       next(error);
+      
     }
   };
 
