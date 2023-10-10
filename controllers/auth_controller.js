@@ -24,7 +24,7 @@ export const signUp = async (req, res, next) => {
 
     } catch (error) {
       next(error);
-      
+
     }
   };
 
@@ -41,7 +41,7 @@ export const signIn = async(req, res, next) => {
         if (!validUser) { return next(errorHandler(404, "Email not found")); }
         
         // If the user is found, compare the password
-        const validPassword = bcrpyt.compareSync(password, validUser.password);
+        const validPassword = bcrypt.compareSync(password, validUser.password);
         // If the password is invalid, return an error
         if (!validPassword) { return next(errorHandler(401, "Invalid Password")); }
         // If the password is valid, create a token
