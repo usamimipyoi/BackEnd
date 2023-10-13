@@ -12,3 +12,7 @@ This project includes sample user collection its basic CRUD routes.
 ## Installation
 
 ## Folder Structure
+- CONTROLLERS
+- MODELS
+- ROUTES
+- UTILS
