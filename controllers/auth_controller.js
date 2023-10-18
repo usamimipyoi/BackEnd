@@ -4,7 +4,7 @@ import errorHandler from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
 export const signUp = async (req, res, next) => {
-    const { firstname, lastname, email, gender, phoneNumber, dob, password } = req.body;
+    const { firstname, lastname, email, gender, phone, dob, password } = req.body;
   
     const hashedPassword = bcrypt.hashSync(password, 10);
   
@@ -13,7 +13,7 @@ export const signUp = async (req, res, next) => {
       lastname,
       email,
       gender,
-      phoneNumber,
+      phone,
       dob,
       password: hashedPassword,
     });
