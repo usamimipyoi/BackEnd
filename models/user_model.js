@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     password: {
       type: String,
       required: true,
-    }
+    },
 }, {
     // Automatically create createdAt and updatedAt fields
      timestamps: true

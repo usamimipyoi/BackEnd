@@ -32,15 +32,13 @@ export const signUp = async (req, res, next) => {
 export const signIn = async(req, res, next) => {
     // Get the email and password from the request body
     const { email, password } = req.body;
-    console.log(req.body.email)
-    console.log(req.body)
     
     try {
         // Find the user
         const validUser = await User.findOne({ email });
         
         // If the user is not found, return an error
-        if (!validUser) { return next(errorHandler(404, "Email not found MTF")); }
+        if (!validUser) { return next(errorHandler(404, "Email not found")); }
         
         // If the user is found, compare the password
         const validPassword = bcrypt.compareSync(password, validUser.password);
