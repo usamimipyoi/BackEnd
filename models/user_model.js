@@ -19,8 +19,14 @@ const userSchema = new mongoose.Schema({
       type: String,
       enum: ['male', 'female', 'other'],
     },
-    phone: String,
-    dob: Date,
+    weight: {
+      type: Number,
+      required: true,
+    },
+    height: {
+      type: Number,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
