@@ -1,35 +1,35 @@
-import Activity from "../models/activity.js";
+import Record from "../models/record_model.js";
 import errorHandler from "../utils/error.js";
 
-export const newActivity = async (req, res, next) => {
-    const {act_id,
+const addRecord = async (req, res, next) => {
+    const {
+        email,
         activity,
         date,
-        time,
-        hour,
         minute,
         location,
         distance,
         note,
         image} = req.body;
 
-    const newAct = new Activity({
-        act_id,
+    const newRecord = new Record({
+        email,
         activity,
         date,
-        time,
-        hour,
         minute,
         location,
         distance,
         note,
         image
-    })
+    }) 
 
+    console.log(newRecord)
     try {
-        await newAct.save();
+        await newRecord.save();
         res.status(201).json("Activity created successfully.");
     }   catch (error) {
         next(error);
     }
 };
+
+export default addRecord;
