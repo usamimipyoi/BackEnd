@@ -3,6 +3,7 @@ import Record from "../models/record_model.js";
 import errorHandler from "../utils/error.js";
 
 const uri = 'mongodb+srv://spider_sorbet:TrYNBe5ui1t7FNoN@maindata.41fxhz2.mongodb.net/Fitness-Dairy?retryWrites=true&w=majority';
+//const uri = process.env.MONGO_URL;
 const client = new MongoClient(uri);
 /* const client = new MongoClient(process.env.MONGO_URL); */
 
