@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoute from './routes/user_route.js';
 import authRoute from './routes/auth_route.js';
+import recordRoute from './routes/record_route.js';
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.listen(3000, () => {
 // Use Routes
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/record", recordRoute);
 
 // Handle Error
 app.use((err, req, res, next) => {
