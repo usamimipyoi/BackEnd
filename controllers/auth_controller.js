@@ -65,8 +65,9 @@ export const google = async(req, res, next)  => {
 
   try {
 
-    const user = await User.findOne({ email: req.user.email });
+    const user = await User.findOne({ email: req.body.email });
     if (user) {
+      console.log(`Inside if user exists`) 
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...others } = user._doc;
       res
@@ -97,13 +98,13 @@ export const google = async(req, res, next)  => {
       await newUser.save();
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password: pass, ...others } = newUser._doc;
-      console.log(others)
       res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
         .json(others);
 
     }
+
   } catch (error) {
     next(error);
   }
