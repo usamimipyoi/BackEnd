@@ -48,7 +48,7 @@ export const readRecord = async (req, res, next) => {
         const cursor = coll.find();
         // iterate code goes here
         await cursor.forEach(console.log);
-        res.status(201).json("Activity Read");
+        res.status(200).json("Activity Read");
     } 
         //in case of error
       catch (error) {
@@ -129,28 +129,8 @@ export const activityUpdate = async (req, res, next) => {
 		// Update activity fields
 		record.activity = activity;
         record.date = date;
-/* 		activity.activity_type = activity_type;
-		activity.calendar = calendar;
-		activity.duration = {
-			hour: hours, // Assuming duration.hour and duration.minute are provided in the req.body
-			minute: minutes,
-		};
-		activity.description = description;
-		activity.current_weight = weight;
-		activity.image; */
 
-
-		// Update user weight
-
-/* 		if (latest === "yes") {
-			await User.findOneAndUpdate(
-				{ _id: activity.user_id },
-				{ weight: weight },
-				{ new: true }
-			);
-		} */
-
-		// Save updated activity to database
+		// Save updated record to database
 		record = await record.save();
 
 		res.json(record);
@@ -170,9 +150,8 @@ export const deleteRecord = async (req, res, next) => {
         let product = await coll.deleteOne(id)
         console.log(product);
         console.log("record is delete");
-        res.status(201).json("Record delete");
+        res.status(200).json("Record delete");
     } catch (error) {
 		next(error);
-		console.log('this one run');
 	}
 };
