@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import userRoute from './routes/user_route.js';
 import authRoute from './routes/auth_route.js';
 import recordRoute from './routes/record_route.js';
+import Record from './models/record_model.js';
 
 dotenv.config();
 
@@ -22,6 +23,14 @@ mongoose.connect(process.env.MONGO_URL,{
 // Initialize Express
 const app = express();
 app.use(express.json());
+
+
+app.get('/record', (req, res) => {
+    Record.find()
+    .then(Records => res.json(Records))
+    .catch((err) => res.json(err));
+})
+
 
 // Routes
 app.listen(3000, () => {
