@@ -40,23 +40,21 @@ export const addRecord = async (req, res, next) => {
 
 export const readRecord = async (req, res, next) => {
     try {
-        await client.connect();
-        // database and collection code goes here
-        const db = client.db("Fitness-Dairy");
-        const coll = db.collection("Records");
-        // find code goes here
-        const cursor = coll.find();
-        // iterate code goes here
-        await cursor.forEach(console.log);
-        res.status(201).json("Activity Read");
-    } 
-        //in case of error
-      catch (error) {
-        next(error);
-    } /* finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
-    }     */
-};
+      await client.connect();
+      const db = client.db("Fitness-Dairy");
+      const coll = db.collection("Records");
+      const cursor = coll.find();
+  
+      // Convert the cursor results into an array
+      const records = await cursor.toArray();
+  
+      // Send the records as a JSON response
+      res.status(200).json(records);
+    } catch (error) {
+      next(error);
+    } finally {
+      await client.close();
+    }
+  };
 
 
