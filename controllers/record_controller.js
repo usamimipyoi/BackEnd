@@ -1,6 +1,7 @@
-import { MongoClient } from "mongodb";
+import { MongoClient , ObjectId } from "mongodb";
 import Record from "../models/record_model.js";
 import errorHandler from "../utils/error.js";
+
 
 const uri = 'mongodb+srv://spider_sorbet:TrYNBe5ui1t7FNoN@maindata.41fxhz2.mongodb.net/Fitness-Dairy?retryWrites=true&w=majority';
 //const uri = process.env.MONGO_URL;
@@ -46,9 +47,13 @@ export const readRecord = async (req, res, next) => {
         const coll = db.collection("Records");
         // find code goes here
         const cursor = coll.find();
+        // return record
+        const records = [];
         // iterate code goes here
-        await cursor.forEach(console.log);
-        res.status(200).json("Activity Read");
+        await cursor.forEach((record) => {
+            records.push(record);
+        });
+        res.status(200).json({ data: records, message: "Records Read" });
     } 
         //in case of error
       catch (error) {
@@ -66,6 +71,7 @@ export const userProfile = async (req, res, next) => {
 
 export const updateRecord = async (req, res, next) => {
     const {
+        _id,
         email,
         activity,
         date,
@@ -74,39 +80,43 @@ export const updateRecord = async (req, res, next) => {
         distance,
         note,
         image} = req.body;
-
-    const putRecord = {
-        email,
-        activity,
-        date,
-        minute,
-        location,
-        distance,
-        note,
-        image
-    }
+    console.log(req.body._id);
+    const idSearch = _id['$oid'] ;
+    console.log(idSearch);
     try {
         await client.connect();
         // database and collection code goes here
         const db = client.db("Fitness-Dairy");
         const coll = db.collection("Records");
         // update code goes here
-        const filter = _id;
-        console.log(_id)
-        console.log(putRecord)
-        const updateDoc = { $set: putRecord};
-        const result = await coll.updateOne(filter, updateDoc);
-        console.log( _id + " has update with "+ result.modifiedCount);
+        const result = await coll.updateOne(
+            {
+                _id: new ObjectId(idSearch)
+            }, 
+            {$set :
+                {
+                    activity: activity,
+                    date: date,
+                    minute: minute,
+                    location: location,
+                    distance: distance,
+                    note: note,
+                    image: image
+                }
+            }
+        );
+        console.log( idSearch + " has update with "+ result.modifiedCount);
+        res.status(200).json({data:'record update'});
     } 
         //in case of error
     catch (error) {
         next(error);
-        console.log('this one run');
+        console.log('this one run mean it error');
     }    
 }
 
 export const activityUpdate = async (req, res, next) => {
-	let {
+	const {
         _id,
 		email,
         activity,
@@ -142,6 +152,7 @@ export const activityUpdate = async (req, res, next) => {
 
 export const deleteRecord = async (req, res, next) => {
     const {id} = req.body;
+    console.log(id)
     try {
         await client.connect();
         // database and collection code goes here
