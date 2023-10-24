@@ -5,6 +5,7 @@ import userRoute from './routes/user_route.js';
 import authRoute from './routes/auth_route.js';
 import recordRoute from './routes/record_route.js';
 import Record from './models/record_model.js';
+import getUserRecord from './routes/get_UserRecord_route.js';
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.listen(3000, () => {
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/record", recordRoute);
+app.use("/api/record_by", getUserRecord);
 
 // Handle Error
 app.use((err, req, res, next) => {

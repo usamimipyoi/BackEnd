@@ -41,7 +41,7 @@ export const addRecord = async (req, res, next) => {
 
 export const readRecord = async (req, res, next) => {
     try {
-
+        console.log(req.body)
       await client.connect();
       const db = client.db("Fitness-Dairy");
       const coll = db.collection("Records");
