@@ -3,7 +3,6 @@ import Record from "../models/record_model.js";
 
 export const getUserRecord = async (req, res) => {
     const email = req.query.email;
-    console.log(email)
     
     try {
         const userRecord = await Record.find({email: email});
@@ -13,12 +12,28 @@ export const getUserRecord = async (req, res) => {
             });
         }
         res.status(200).json(userRecord);
+
     } catch (err) {
-        return errorHandler(500, "Internal Server Error");
+        next(err);
     }
 };
 
 export const deleteUserRecord = async (req, res, next) => {
-    res.message = "Delete user record";
-    next();
+    const recordId = req.body._id;
+
+    try {
+        const result = await Record.deleteOne({ _id: recordId });
+        if (result.deletedCount > 0) {
+
+            res.status(200).json({ success: true, message: "Record deleted successfully" });
+            
+        } else {
+            
+            console.log("Record not found.");
+            res.status(404).json({ success: false, message: "Record not found" });
+        }
+
+    } catch (err) {
+        next(err);
+    }
 };
