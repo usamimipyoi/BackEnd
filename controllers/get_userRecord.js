@@ -1,7 +1,7 @@
 import errorHandler from "../utils/error.js";
 import Record from "../models/record_model.js";
 
-const getUserRecord = async (req, res) => {
+export const getUserRecord = async (req, res) => {
     const email = req.query.email;
     console.log(email)
     
@@ -18,4 +18,7 @@ const getUserRecord = async (req, res) => {
     }
 };
 
-export default getUserRecord;
+export const deleteUserRecord = async (req, res, next) => {
+    res.message = "Delete user record";
+    next();
+};
