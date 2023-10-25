@@ -161,3 +161,25 @@ export const deleteRecord = async (req, res, next) => {
 		next(error);
 	}
 };
+
+export const deleteRecord2 = async (req, res, next) => {
+    const {
+        _id,
+        userEmail} = req.body;
+    const idSearch = _id['$oid'] ;
+    try {
+        await client.connect();
+        // database and collection code goes here
+        const db = client.db("Fitness-Dairy");
+        const coll = db.collection("Records");
+        let product = await coll.deleteOne({
+            _id: new ObjectId(idSearch),
+            email:userEmail
+        })
+        console.log(product);
+        console.log("record is delete");
+        res.status(200).json("Record delete");
+    } catch (error) {
+		next(error);
+	}
+};
